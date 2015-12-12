@@ -1,0 +1,15 @@
+body{
+
+}
+
+p{
+	font-size:1.3em;
+}
+
+.well{
+	padding: 40px;
+}
+
+.map-iframe{
+	margin: 0 auto;
+}

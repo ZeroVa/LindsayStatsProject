@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Stats Project</title>
+	<meta>
+	<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="./css/bootstrap.css">
+
+
+	<link rel="stylesheet" href="./css/styles.css">
+	<script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+</head>
+	<body>
+
+		<nav class="navbar navbar-fixed-top navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Math 113 Stats Project</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        
+        <li><a href="#introduction">Introduction</a></li>
+        <li><a href="#cleaning-data">Cleaning Out the Data</a></li>
+        <li><a href="#filtering-data">Filtering the Data</a></li>
+        <li><a href="#mapping-data">Mapping Geographic Data</a></li>
+        <li><a href="#math">Doing the Math</a></li>
+        <li><a href="#conclusions">Conclusions</a></li>
+        
+      </ul>
+      
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+
+		<div class="jumbotron">
+  <div class="container">
+    <h1 class="page-header">Going the distance... To the museum.</h1>
+    <h3>Ahsan Zahid, Camille Santos</h3>
+  </div>
+</div>
+  
+  <div class="container" id="introduction">
+    <div class="well">
+      <h2 class="section-header">Introduction</h2>
+      <hr>
+      <div class="row">
+        <p>Lindsay Wildlife Museum gets visitors from all over California. Some of these visitors travel from further away than others. By looking at how far people travel in order to visit the museum, we can assess the need for further outreach to try and attract people who live further away.</p>
+
+        <p>We will use data from the museum about visitors who sign up for classes to assess whether or not a significant number of people travel from far away to visit the museum.</p>
+      </div>
+    </div>
+  </div>
+
+	
+	<div class="container" id="cleaning-data">
+    <div class="well">
+      <h2 class="section-header">Cleaning Out the Data</h2>
+      <hr>
+      <div class="row">
+        <p>For this project, we used the &lsquo;Registrations-NoNames&rsquo; dataset, which provides details about people who have registered for classes at the museum starting in 2010. We will only need part of the supplied data (namely user IDs, zip codes, whether they are members, and course numbers), so we clean out the data by removing unnecessary columns to make working with the data easier. </p>
+      </div>
+    </div>
+	</div>
+
+  
+  <div class="container" id="filtering-data">
+    <div class="well">
+      <h2 class="section-header">Filtering the Data</h2>
+      <hr>
+      <div class="row">
+        <p>We will be focusing in on the classes open to the public, which will be the children&rsquo;s and family classes. These are marked in the data as prefixes &lsquo;cc&rsquo; and &lsquo;cta&rsquo; to the &lsquo;Course #&rsquo; field. We further clean out the data by removing the field trips, camps, homeschool, and preschool classes.</p>
+
+        <p>Since we want to focus on the people attending rather than the classes themselves, we also remove duplicates from the data based on the &lsquo;User ID #&rsquo; field. </p>
+
+        <p>There is a small number of people who register from outside of California, as well as a few whose zip codes are invalid. Thus we remove these entries from our dataset so as not to skew our calculations and so that we know all of our data is relevant. This revised dataset which contains only people from within California is called &lsquo;FullSetFiltered.csv&rsquo;.</p>
+
+        <p>We also want to consider the number of members versus non-members, so we filter the data further into two new datasets: &lsquo;FullSetFiltered-MembersOnly.csv&rsquo; and &lsquo;FullSetFiltered-NonMembers.csv&rsquo;.</p>
+
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="container" id="mapping-data">
+    <div class="well">
+      <h2 class="section-header">Mapping Geographic Data</h2>
+      <hr>
+      <div class="row">
+        <p>Next, we sort the data by zip code, and see how many attendees come from each zip code. We map these out using software called OpenHeatMap, which lets us see, visually, where most of the attendees are coming from, and how far they travel (roughly) to attend classes.</p>
+        <hr>
+        <h3>Assigning Distances to each Visiter</h3>
+        <p>Since we have only rather coarse data (zip code, rather than geospatial coordinates or addresses), we can judge distance travelled only very roughly. So, each student coming from a certain zip code is assigned the same approximate distance. We use Google Maps to find driving directions between a visitor’s zip code and the zip code of museum, and assign that approximate distance (in miles) to each user.</p>
+        <hr>
+        <h3>Graphing Distances</h3>
+        <p>With this data in hand, we construct a histogram comparing distance from the museum to the number of students coming from each zip code. This way, we might see how attendance to public classes is distributed distance-wise.</p>
+        <p>We further split this to look at members vs non-members, to see if people living closer to the museum get membership more often than those who travel from further away. We create a separate histogram that shows how members are distributed by distance from the museum.</p>
+        <hr>
+        <h2>Resulting Graphs</h3>
+        <img src="./img/FreqDistanceAllVisitors.png" alt="Histogram">
+        <img src="./img/FreqDistanceMembers.png" alt="Histogram">
+        <img src="./img/FreqDistanceNonMembers.png" alt="Histogram">
+
+        <h3>Heatmap of Visitors vs Zip Code</h3>
+        <iframe class="map-iframe" width="600" height="450" src="http://www.openheatmap.com/embed.html?map=AnticonsumerDefinitudesGreens" ></iframe>
+        <hr>
+        <h3>Heatmap of Visitors vs Zip Code in California</h3>
+        <iframe class="map-iframe" width="600" height="450" src="http://www.openheatmap.com/embed.html?map=RiblessIcosandrianVaults" ></iframe>
+        <hr>
+        <h3>Heatmap of Members vs Zip Code in California</h3>
+        <iframe class="map-iframe" width="600" height="450" src="http://www.openheatmap.com/embed.html?map=AzerbaijaniCarrollAshelman" ></iframe>
+
+
+
+      </div>
+    </div>
+  </div>
+
+
+  
+  <div class="container" id="math">
+    <div class="well">
+      <h2 class="section-header">Doing the Math</h2>
+      <hr>
+      <div class="row">
+        <h3>Summary of the Hypothesis Test</h3>
+        <p>Null Hypothesis: 10% of visitors live more than 25 miles from the museum</p>
+
+        <p>Hypothesis: More than 10% of visitors live more than 25 miles from the museum</p>
+
+        <p>Bernoulli test for whether a member lives at least 25 miles away or not.</p>
+
+        <p>Success: >=25 miles away</p>
+
+        <p>Failure: <25 miles away</p>
+
+        <h3>What We're Doing...</h3>
+        <p>Since we do not know the actual proportion of people who visit the museum from further than 25 miles away, and we do not know the actual variance of this population, we will approximate it using the sample proportion and variance.</p>
+
+        <p>Each piece of data describes a &lsquo;Bernoulli trial&rsquo;. This means that there are two outcomes: either the visitor in question does live further than 25 miles from the museum, or the visitor does not. Essentially we are breaking the visitors into two groups: those who are counted as &lsquo;successes&rsquo; in this experiment (hence, those who live further and those regarded as &lsquo;failures&rsquo; by the experiment (those who live closer to the museum). </p>
+
+        <p>We will use the symbol <span lang="latex">y</span> to represent the number of people in our data who do live further than 25 miles from the museum. We will use the symbol <span lang="latex">n</span> to represent the total number of people about whom we have data.</p>
+
+        <p>So, to find the proportion of people who are &lsquo;successes&rsquo; in the experiment, we simply divide <span lang="latex">y</span> by <span lang="latex">n</span>.</p>
+
+        <p>We can employ the following formula in order to form a confidence interval around the proportion of successes.</p>
+
+        <div lang="latex">z = \frac{y/n-p_0}{\sqrt{p_0(1-p_0)/n}} \ge z_\alpha</div>
+
+
+        <p>The <span lang="latex">y</span> and <span lang="latex">n</span> in this formula are precisely as we have explained them above. The <span lang="latex">\alpha</span> represents our &lsquo;significance level&rsquo;, which represents how improbable our data must be, compared to the null hypothesis, to represent a significant difference. We will use a significance level of 5%. This means that, if we assume that 10% of visitors live further than 25 miles away, then we will reject that hypothesis if our data shows that the actual proportion is less than 5% likely. Also, <span lang="latex">z_\alpha</span> measures how far our data can be from what we are assuming to be the actual proportion (in this case, 0.10, or 10%). This proportion is labeled <span lang="latex">p_{0}</span>.  We can find the appropriate <span lang="latex">z_\alpha</span> by looking at a table of values. In this case, <span lang="latex">z_\alpha</span> will be 1.645</p>
+
+        <p>If our data is unlikely, given the null hypothesis, then the null hypothesis must be wrong. So we would reject the null hypothesis, in favour of the alternate hypothesis.</p>
+
+        <p>With that in mind, here are our two hypotheses: Null Hypothesis: 10% of members live more than 25 miles from the museum (or, <span lang="latex">y/n = 0.10)</span> </p>
+
+        <p>Hypothesis: More than 10% of members live more than 25 miles from the museum , or <span lang="latex">(y/n >.10)</span></p>
+
+        <p>If our calculated value ends up greater than or equal to z then we reject our null hypothesis, in favor of our alternate hypothesis. Otherwise, we cannot reject it.</p>
+
+        <p>Now we just have to plug our values into the formula and see what we get. Plugging in 107 for <span lang="latex">y</span>, and 2106 for <span lang="latex">n</span>, as well as 0.10 for <span lang="latex">p_0</span> and 1.645 for <span lang="latex">z_\alpha</span> we get the following:</p>
+        
+        <div lang="latex">z = \frac{107/2106-0.10}{\sqrt{0.10(1-0.10)/2106}} \approx -7.525 < 1.645 = z_{.05}</div>
+
+        <p>As we can see, we cannot reject the null hypothesis.</p>
+
+        <p>Now, let&rsquo;s try the same test, but see if more than 10% of members come from further away.  Essentially ,we perform the same calculations as above, but use 60 for <span lang="latex">y</span>, and use 1357 for <span lang="latex">n</span>.</p>
+        <div lang="latex">z = \frac{60/1357-0.10}{\sqrt{0.10(1-0.10)/1357}} \approx -6.850 < 1.645 = z_{.05}</div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="container" id="conclusions">
+    <div class="well">
+      <h2 class="section-header">Conclusions</h2>
+      <hr>
+      <div class="row">
+        <p>By simply looking at the dataset it seems as though most people who register for classes at the Lindsay Wildlife Museum come from within the Contra Costa County. Our calculations affirm this, as we have shown that not more than 10% of visitors come from further than 25 miles away from the museum. Thus Lindsay Wildlife should advertise more to people who live further away -- like in San Francisco, the Peninsula, or the North Bay. After expanding advertising efforts, these calculations should be performed again on the new data in order to see if the museum is garnering the interest of those who live further away. Perhaps at the moment children only in the nearby vicinity know that classes and events happen at the museum. If the museum were to send flyers home with children at schools further away, the museum could draw visitors from the peninsula/SF area or the north bay.</p>
+
+      </div>
+    </div>
+  </div>
+
+	
+		<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+		<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script src="js/scripts.js"></script>
+	</body>
+</html>
